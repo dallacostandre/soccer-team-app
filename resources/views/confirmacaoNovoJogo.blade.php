@@ -9,6 +9,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
     <style>
@@ -64,21 +65,8 @@
             line-height: 28px
         }
 
-        .counter {
-            display: block;
-            font-size: 32px;
-            font-weight: 700;
-            color: white;
-            line-height: 28px
-        }
-
         .counter-box.colored {
             background: #3acf87
-        }
-
-        .counter-box.colored-2 {
-            background: #434343;
-
         }
 
         .counter-box.colored p,
@@ -86,36 +74,24 @@
         .counter-box.colored .counter {
             color: #fff
         }
-
     </style>
-    <title>Soccer Team - Web App</title>
+
+    <title>Time Futebol</title>
 </head>
 
 <body>
     <div class="container">
         <div class="row">
-            <div class="four col-md-3">
-                <a href="{{ route('confirmar') }}">
-                    <div class="counter-box colored animate__animated animate__fadeInRight">
-                        <i class="fa fa-thumbs-o-up"></i>
-                        <span class="counter">Confirmar Presença</span>
-                    </div>
-                </a>
+            <div class="text-center">
+                <h2>Jogo Criado com sucesso!</h2>
             </div>
             <div class="four col-md-3">
-                <a href="{{ route('statusJogo') }}">
-                    <div class="counter-box colored-2 animate__animated animate__fadeInRight animate__delay-1s">
+                    @csrf
+                    <div class="counter-box colored animate__animated animate__fadeInRight animate__delay-1s">
                         <i class="fa fa-thumbs-o-up"></i>
-                        <span class="counter">Status Jogo</span>
+                        <p>Deseja compartilhar este jogo no Whats App? </p>
+                        <a class="btn btn-success btn-lg mt-4 col-12" href="https://wa.me/send?text=Confirmado futebol dia  *{{$data}}* às *{{$horario}}* no *{{$local}}*. Acesse este link para confirmar: {{ urlencode('https://127.0.0.1:8000/confirmar-presenca')}} *Código de acesso: *{{$key}}*" target="_blank" >Compartilhar no Whatsapp</a>
                     </div>
-                </a>
-            </div>
-            <div class="four col-md-3">
-                <a href="{{ route('novoJogo') }}">
-                <div class="counter-box colored-2 animate__animated animate__fadeInRight animate__delay-2s"> <i class="fa fa-group"></i>
-                    <span class="counter">Novo Jogo</span>
-                </div>
-                <a>
             </div>
         </div>
     </div>

@@ -5,7 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class rc extends Model
+class Jogadores extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'key',
+    ];
 }

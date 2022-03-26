@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\rc;
+use App\Models\Jogo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class MainController extends Controller
 {
@@ -24,7 +25,7 @@ class MainController extends Controller
      */
     public function create()
     {
-        //
+        return view('novoJogo');
     }
 
     /**
@@ -35,16 +36,42 @@ class MainController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if($request){
+
+            $novoJogo = new Jogo();
+
+            $data = date('d-m', strtotime($request->data));
+            $horario = $request->horario;
+            $local = $request->local;
+            $key = uniqid();
+            $keyHashed = Hash::make($key);
+
+            $novoJogo->key = $key;
+            $novoJogo->data = $request->data;
+            $novoJogo->horario = $request->horario;
+            $novoJogo->duracao = $request->duracao;
+            $novoJogo->tipo_campo= $request->tipo_campo;
+            $novoJogo->valor= $request->valor;
+            $novoJogo->goleiro_de_aluguel= $request->goleiro_de_aluguel;
+            $novoJogo->valor_goleiro_de_aluguel = $request->valor_goleiro_de_aluguel;
+            $novoJogo->local= $request->local;
+            $novoJogo->frequencia= $request->frequencia;
+            $novoJogo->save();
+
+
+            return view('confirmacaoNovoJogo', compact('local', 'horario', 'data', 'key'));
+            
+        }else{
+        
+        }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\rc  $rc
      * @return \Illuminate\Http\Response
      */
-    public function show(rc $rc)
+    public function show()
     {
         //
     }
@@ -52,10 +79,9 @@ class MainController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\rc  $rc
      * @return \Illuminate\Http\Response
      */
-    public function edit(rc $rc)
+    public function edit()
     {
         //
     }
@@ -64,10 +90,9 @@ class MainController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\rc  $rc
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, rc $rc)
+    public function update(Request $request, )
     {
         //
     }
@@ -75,10 +100,9 @@ class MainController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\rc  $rc
      * @return \Illuminate\Http\Response
      */
-    public function destroy(rc $rc)
+    public function destroy()
     {
         //
     }
