@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Jogadores;
 use App\Models\Jogo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -37,9 +38,7 @@ class MainController extends Controller
     public function store(Request $request)
     {
         if($request){
-
             $novoJogo = new Jogo();
-
             $data = date('d-m', strtotime($request->data));
             $horario = $request->horario;
             $local = $request->local;
@@ -58,11 +57,10 @@ class MainController extends Controller
             $novoJogo->frequencia= $request->frequencia;
             $novoJogo->save();
 
-
             return view('confirmacaoNovoJogo', compact('local', 'horario', 'data', 'key'));
             
         }else{
-        
+         return false;
         }
     }
 
@@ -115,16 +113,27 @@ class MainController extends Controller
     public function buscarJogo(Request $request)
     {
         if($request->name){
+            $keyReceived = $request->id;
+            $nameReceived = $request->name;
+            if($keyReceived && $nameReceived){
+                
+                $dadosJogo = Jogo::where(['key' => $keyReceived])->first();
+                
+                if($dadosJogo){
+                    
+                    $dadosJogador = new Jogadores();
+                    $dadosJogador->key = $keyReceived;
+                    $dadosJogador->nome = $nameReceived;
+                    $dadosJogador->save();
 
-            // buscar no banco de dados a key inserida
-            $id = $request->id;
-            $name = $request->name;
-            
-            // retornar com o resultado
-            return view('resultadoBusca', compact('id', 'name'));
+                    return view('resultadoBusca', compact('keyReceived', 'name', 'dadosJogo'));
+                }else{
+                    return false;
+                }
+            }else{
+                return false;
+            }
         }else{
-            // buscar no banco de dados a key inserida
-            $id = $request->id;
             return view('confirmacao-e-dados');
         }
     }
