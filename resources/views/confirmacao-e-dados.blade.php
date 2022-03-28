@@ -95,6 +95,9 @@
                         <p>Campo: {{ $dadosJogo->tipo_campo }} </p>
                         <hr>
                         <p>Valor Estimado: R$ {{ round($valorEstimado, 2) }} </p>
+                        <br>
+                        <hr>
+                        <span>*Valor estimado: Soma do valor total das horas do campo com goleiro de aluguel caso tenha.</span>
                     </div>
                     <a class="btn btn-success btn-lg mt-4 col-12" href="{{ url('/') }}">Voltar</a>
                 </div>
