@@ -96,6 +96,7 @@
                             Compartilhar no Whatsapp
                         </a>
                         <a class="btn btn-success btn-lg mt-4 col-12" href="{{ url('/') }}">Voltar</a>
+                        <a class="btn btn-success btn-lg mt-4 col-12" href="{{ url('/confirmar-presenca') }}">Confirmar Presença</a>
                     </div>
                     <div>
                     </div>
