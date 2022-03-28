@@ -26,7 +26,7 @@ class MainController extends Controller
      */
     public function create()
     {
-        return view('novoJogo');
+        return view('cadastro-novo-jogo');
     }
 
     /**
@@ -37,7 +37,7 @@ class MainController extends Controller
      */
     public function store(Request $request)
     {
-        if($request){
+        if ($request) {
             $novoJogo = new Jogo();
             $data = date('d-m', strtotime($request->data));
             $horario = $request->horario;
@@ -49,18 +49,17 @@ class MainController extends Controller
             $novoJogo->data = $request->data;
             $novoJogo->horario = $request->horario;
             $novoJogo->duracao = $request->duracao;
-            $novoJogo->tipo_campo= $request->tipo_campo;
-            $novoJogo->valor= $request->valor;
-            $novoJogo->goleiro_de_aluguel= $request->goleiro_de_aluguel;
+            $novoJogo->tipo_campo = $request->tipo_campo;
+            $novoJogo->valor = $request->valor;
+            $novoJogo->goleiro_de_aluguel = $request->goleiro_de_aluguel;
             $novoJogo->valor_goleiro_de_aluguel = $request->valor_goleiro_de_aluguel;
-            $novoJogo->local= $request->local;
-            $novoJogo->frequencia= $request->frequencia;
+            $novoJogo->local = $request->local;
+            $novoJogo->frequencia = 1;
             $novoJogo->save();
 
-            return view('confirmacaoNovoJogo', compact('local', 'horario', 'data', 'key'));
-            
-        }else{
-         return false;
+            return view('confirmacao-novo-jogo', compact('local', 'horario', 'data', 'key'));
+        } else {
+            return false;
         }
     }
 
@@ -90,7 +89,7 @@ class MainController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, )
+    public function update(Request $request,)
     {
         //
     }
@@ -107,44 +106,62 @@ class MainController extends Controller
 
     public function confirmarPresenca()
     {
-        return view('confirmar');
+        return view('inserir-codigo-e-nome');
     }
 
     public function buscarJogo(Request $request)
     {
-        if($request->name){
+        if ($request->name) {
             $keyReceived = $request->id;
             $nameReceived = $request->name;
-            if($keyReceived && $nameReceived){
-                
+            if ($keyReceived && $nameReceived) {
                 $dadosJogo = Jogo::where(['key' => $keyReceived])->first();
-                
-                if($dadosJogo){
-                    
-                    $dadosJogador = new Jogadores();
-                    $dadosJogador->key = $keyReceived;
-                    $dadosJogador->nome = $nameReceived;
-                    $dadosJogador->save();
-
-                    return view('resultadoBusca', compact('keyReceived', 'name', 'dadosJogo'));
+                if ($dadosJogo) {
+                    return view('resultado-busca-key', compact('keyReceived', 'nameReceived', 'dadosJogo'));
                 }else{
-                    return false;
+                    return view('nao-encontrado');
                 }
-            }else{
-                return false;
+            } else {
+
+                return view('nao-encontrado');
             }
-        }else{
-            return view('confirmacao-e-dados');
+        } else {
+            $keyReceived = $request->key;
+            $dadosJogo = Jogo::where(['key' => $keyReceived])->first();
+            if ($dadosJogo) {
+                $jogadores = Jogadores::where(['key' => $keyReceived])->get();
+                $qntJogadores = count($jogadores);
+                $dadosJogo = Jogo::where(['key' => $keyReceived])->first();
+                $valorEstimado = $dadosJogo->goleiro_de_aluguel ? ($dadosJogo->valor + $dadosJogo->valor_goleiro_de_aluguel) / $qntJogadores : ($dadosJogo->valor) / $qntJogadores;
+
+                return view('confirmacao-e-dados', compact('dadosJogo', 'jogadores', 'valorEstimado'));
+            } else {
+                return view('nao-encontrado');
+            }
         }
     }
 
     public function confirmarEscalacao(Request $request)
     {
-        return view('confirmacao-e-dados');
+        $keyReceived = $request->key;
+        $nameReceived = $request->name;
+
+        $dadosJogador = new Jogadores();
+        $dadosJogador->key = $keyReceived;
+        $dadosJogador->nome_jogador = $nameReceived;
+        $dadosJogador->save();
+
+        $jogadores = Jogadores::where(['key' => $keyReceived])->get();
+        $qntJogadores = count($jogadores);
+        $dadosJogo = Jogo::where(['key' => $keyReceived])->first();
+
+        $valorEstimado = $dadosJogo->goleiro_de_aluguel ? ($dadosJogo->valor + $dadosJogo->valor_goleiro_de_aluguel) / $qntJogadores : ($dadosJogo->valor) / $qntJogadores;
+
+        return view('confirmacao-e-dados', compact('keyReceived', 'dadosJogo', 'jogadores', 'valorEstimado'));
     }
 
     public function statusJogo(Request $request)
     {
-        return view('statusJogo');
+        return view('buscar-status-do-jogo');
     }
 }

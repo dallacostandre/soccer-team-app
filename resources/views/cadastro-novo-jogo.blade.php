@@ -104,16 +104,16 @@
                         <span class="counter mt-4">Tipo de Campo</span>
                         <div class="form-group">
                             <select class="form-control input-lg mt-2" id="tipo_campo" name="tipo_campo">
-                                <option value="0">Sintético</option>
-                                <option value="1">Futsal</option>
-                                <option value="2">Campo Aberto</option>
-                                <option value="3">Outro</option>
+                                <option value="Sintético">Sintético</option>
+                                <option value="Futsal">Futsal</option>
+                                <option value="Campo Aberto">Campo Aberto</option>
+                                <option value="Outro">Outro</option>
                             </select>
                         </div>
 
                         <span class="counter mt-4">Preço do Campo</span>
                         <div class="form-group">
-                            <input type="number" class="form-control input-lg mt-2" name="valor">
+                            <input type="number" class="form-control input-lg mt-2 money" name="valor">
                         </div>
 
                         <span class="counter mt-4">Goleiro de Aluguel?</span>
@@ -131,12 +131,6 @@
                         <div class="form-group">
                             <input type="text" class="form-control input-lg mt-2" name="local">
                         </div>
-
-                        <span class="counter mt-4">Frequência por mês</span>
-                        <div class="form-group">
-                            <input type="number" class="form-control input-lg mt-2" name="frequencia">
-                        </div>
-
                         <button class="btn btn-success btn-lg mt-4 col-12">Confirmar</button>
                     </form>
                 </div>

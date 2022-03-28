@@ -74,7 +74,6 @@
         .counter-box.colored .counter {
             color: #fff
         }
-
     </style>
 
     <title>Time Futebol</title>
@@ -83,16 +82,23 @@
 <body>
     <div class="container">
         <div class="row">
+            <div class="text-center">
+                <h2>Jogo Criado com sucesso!</h2>
+            </div>
             <div class="four col-md-3">
-                <div class="counter-box colored animate__animated animate__fadeInRight animate__delay-1s text-center">
-                    <i class="fa fa-thumbs-o-up"></i>
-                    <form action="{{ route('buscarJogo') }}" method="POST">
-                        @csrf
-                        <span class="counter mt-4">Insira o código</span>
-                        <input type="text" class="form-control input-lg mt-4" name="id">
-                        <button class="btn btn-success btn-lg mt-4 col-12">Confirmar</button>
-                    </form>
-                </div>
+                    @csrf
+                    <div class="counter-box colored animate__animated animate__fadeInRight animate__delay-1s">
+                        <i class="fa fa-thumbs-o-up"></i>
+                        <span class="counter">Chave de Acesso</span>
+                        <p class="mt-4" style="background-color:yellow; border:#666 solid 2px; font-weight:bold; color:black;">{{$key}}</p>
+                        <p>Deseja compartilhar este jogo no Whats App? </p>
+                        <a class="btn btn-success btn-lg mt-4 col-12" href="https://wa.me/send?text=Confirmado futebol dia  *{{$data}}* às *{{$horario}}* no *{{$local}}*. Acesse este link para confirmar: {{ urlencode('https://127.0.0.1:8000/confirmar-presenca')}} *Código de acesso: *{{$key}}*" target="_blank">
+                            Compartilhar no Whatsapp
+                        </a>
+                        <a class="btn btn-success btn-lg mt-4 col-12" href="{{ url('/') }}">Voltar</a>
+                    </div>
+                    <div>
+                    </div>
             </div>
         </div>
     </div>

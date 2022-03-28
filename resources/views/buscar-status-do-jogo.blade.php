@@ -13,12 +13,24 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
     <style>
+        html {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+
         * {
             box-sizing: border-box;
         }
 
         a {
             text-decoration: none;
+        }
+
+        .container {
+            margin-top: 100px
         }
 
         .counter-box {
@@ -72,31 +84,14 @@
     <div class="container">
         <div class="row">
             <div class="four col-md-3">
-                <div class="counter-box colored animate__animated animate__fadeInRight animate__delay-1s">
+                <div class="counter-box colored animate__animated animate__fadeInRight animate__delay-1s text-center">
                     <i class="fa fa-thumbs-o-up"></i>
-                    <span class="counter">Escalação</span>
-                    <div class="container">
-                        <table class="table table-sm table-dark mt-2">
-                            <tbody>
-                                @foreach ($jogadores as $indexKey =>$jogador)
-                                    <tr>
-                                        <th scope="row">{{ $indexKey+1 }}</th>
-                                        <td>{{ Str::upper($jogador->nome_jogador) }}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                    <hr>
-                    <div>
-                        <p>Local: {{ $dadosJogo->local }} </p>
-                        <p>Horário: {{ date('H:i', strtotime($dadosJogo->horario)) }} </p>
-                        <p>Data: {{ date('Y-m-d H:i:s') === $dadosJogo->data ? 'Hoje' : date('d-M', strtotime($dadosJogo->data)) }} </p>
-                        <p>Campo: {{ $dadosJogo->tipo_campo }} </p>
-                        <hr>
-                        <p>Valor Estimado: R$ {{ round($valorEstimado, 2) }} </p>
-                    </div>
-                    <a class="btn btn-success btn-lg mt-4 col-12" href="{{ url('/') }}">Voltar</a>
+                    <form action="{{ route('buscarJogo') }}" method="ANY">
+                        @csrf
+                        <span class="counter mt-4">Insira o código</span>
+                        <input type="text" class="form-control input-lg mt-4" name="key">
+                        <button class="btn btn-success btn-lg mt-4 col-12">Confirmar</button>
+                    </form>
                 </div>
             </div>
         </div>

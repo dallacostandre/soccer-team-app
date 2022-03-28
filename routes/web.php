@@ -24,7 +24,7 @@ Route::GET('/', function () {
 Route::GET('confirmar-presenca', [MainController::class, 'confirmarPresenca'])->name('confirmar');
 
 // VIEW PARA ENVIAR CHAVE DE ACESSO
-Route::POST('/buscar-jogo', [MainController::class, 'buscarJogo'])->name('buscarJogo');
+Route::ANY('/buscar-jogo', [MainController::class, 'buscarJogo'])->name('buscarJogo');
 
 // VIEW PARA CRIAR NOVO JOGO
 Route::GET('/novo-jogo', [MainController::class, 'create'])->name('novoJogo');

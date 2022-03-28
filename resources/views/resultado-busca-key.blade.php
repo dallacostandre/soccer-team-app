@@ -74,6 +74,7 @@
         .counter-box.colored .counter {
             color: #fff
         }
+
     </style>
 
     <title>Time Futebol</title>
@@ -83,17 +84,18 @@
     <div class="container">
         <div class="row">
             <div class="text-center">
-                <h2> {{$name}}, encontramos este jogo</h2>
+                <h2> {{ $nameReceived }}, encontramos este jogo</h2>
             </div>
             <div class="four col-md-3">
-                <form action="{{route('confirmarEscalacao', ['id' => $id, 'name' => $name])}}" method="POST">
+                <form action="{{ route('confirmarEscalacao', ['key' => $keyReceived, 'name' => $nameReceived]) }}"
+                    method="POST">
                     @csrf
                     <div class="counter-box colored animate__animated animate__fadeInRight animate__delay-1s">
                         <i class="fa fa-thumbs-o-up"></i>
-                        <p>Local: </p>
-                        <p>Horário: </p>
-                        <p>Data: </p>
-                        <p>Campo: </p>
+                        <p>Local: {{ $dadosJogo->local }} </p>
+                        <p>Horário: {{ date('H:i', strtotime($dadosJogo->horario)) }} </p>
+                        <p>Data: {{ date('Y-m-d H:i:s') === $dadosJogo->data ? 'Hoje' : date('d-M', strtotime($dadosJogo->data)) }} </p>
+                        <p>Campo: {{ $dadosJogo->tipo_campo }} </p>
                         <button class="btn btn-success btn-lg mt-4 col-12" type="submit">Confirmar</button>
                     </div>
                 </form>
